@@ -1,0 +1,14 @@
+<button type="button" class="
+  flex 
+  transition-all 
+  justify-center 
+  duration-200 
+  ease-in-out  
+  rounded-md 
+  p-2
+  px-4 
+  {{extraClasses}}">
+  <span *ngIf="iconPos === 'before'" class="material-symbols-outlined">{{icon}}</span>
+  {{displayText}}
+  <span *ngIf="iconPos === 'after'" class="material-symbols-outlined">{{icon}}</span>
+</button>

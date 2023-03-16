@@ -1,0 +1,59 @@
+<ng-container *ngIf="!editing">
+  <div>
+    <div class="flex text-slate-400">
+      <span *ngIf="tag" class="mr-1 material-symbols-outlined text-md {{tag}} downsize -ml-1" id="tag">circle</span>
+      <p>{{time}}</p>
+    </div>
+    <p class="text-xl">{{body}}</p>
+  </div>
+  <div>
+    <span class="transition-all material-symbols-outlined cursor-pointer mt-3 scale-75 hover:scale-50 mr-3" (click)="handleEditReminder(id)">edit</span>
+    <span class="transition-all material-symbols-outlined cursor-pointer mt-3 text-red-400 hover:scale-75" (click)="handleDeleteReminder(id)">close</span>
+  </div>
+</ng-container>
+<ng-container *ngIf="editing">
+  <input type="datetime-local" required name="timePicker" id="{{id}}" [(ngModel)]="editReminderDateTimeValue" class="
+    cursor-pointer
+    dark:bg-slate-700 
+    dark:border-slate-500 
+    px-4 py-2 
+    w-96 
+    rounded-2xl 
+    timePicker">
+    <select [(ngModel)]="editReminderTagValue" id="{{id}}" class="
+      cursor-pointer 
+      dark:bg-slate-700 
+      dark:border-slate-500 
+      rounded-2xl 
+      px-4 py-2 ml-4" 
+      [style]="{'max-width':'70px'}">
+      <option disabled selected="Tag">Tag</option>
+      <option *ngFor="let tag of tags" value="{{tag.value}}" class="{{tag.value}}">
+        <span class="scale-75">{{tag.color}}</span>
+      </option>
+    </select>
+    <div class="flex justify-between items-end w-full border-b-2 border-slate-500 dark:border-slate-400 pb-2 mx-6">
+      <input type="text" class="
+        outline-0
+        transition-all
+        ease-in-out 
+        bg-transparent 
+        mr-4
+        w-full
+        text-lg"
+        id="{{id}}"
+        maxlength="30"
+        value={{body}}
+        placeholder={{body}}
+        #editReminder
+        required
+        [(ngModel)]="editReminderInputValue" 
+        (keyup.enter)="onEnterEditReminder($event, id)"
+        (keydown)="checkReminderLength($event, id)">
+      <span class="mr-3 opacity-30">{{editReminderInputLen}}/30</span>
+      <span class="transition-all duration-300 cursor-pointer material-symbols-outlined scale-125 hover:scale-95" (click)="submitEditReminder(editReminder.value, id)">done</span>
+    </div>
+    <app-button (click)="handleCancelEditReminder()" displayText="Cancel" extraClasses="bg-slate-600 text-white hover:bg-indigo-500 mt-1"></app-button>
+</ng-container>
+
+

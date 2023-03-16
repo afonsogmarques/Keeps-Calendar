@@ -1,0 +1,72 @@
+<div (click)="toggleModal()" (keyup)="closeModal($event)" class="fixed inset-0 opacity-80 bg-slate-900"></div>
+<div class="flex flex-col fixed inset-x-96 inset-y-32 px-28 py-20 bg-white dark:bg-slate-700 rounded-3xl overflow-x-hidden overflow-y-scroll">
+  <div class="flex justify-between">
+    <div class="mb-10 text-xl">
+      <h1 class="text-4xl font-bold">Reminders</h1>
+      <p class="opacity-60">{{ curDate.day | dateString: curDate.monthIndex : curDate.year }}</p>
+    </div>
+    <app-button (click)="handleAddReminder()" displayText="{{addReminderOpen ? 'Done' : '+ Add Reminder'}}" extraClasses="bg-indigo-500 text-white hover:bg-indigo-600"></app-button>
+  </div>
+  <div *ngIf="addReminderOpen" class="
+    flex 
+    justify-between
+    align-center
+    mb-20 
+    mt-10
+    pb-3">
+    <input type="time" name="timePicker" id="timePicker" [(ngModel)]="newReminderTimeValue" class="
+      cursor-pointer 
+      border-2
+      bg-slate-200
+      dark:bg-slate-700 
+      dark:border 
+      dark:border-slate-500 
+      p-4 w-40 
+      rounded-2xl">
+    <select [(ngModel)]="newReminderTagValue" class="
+      cursor-pointer 
+      bg-slate-200
+      dark:bg-slate-700 
+      dark:border 
+      dark:border-slate-500 
+      rounded-2xl 
+      p-4 ml-4">
+      <option value="" disabled selected>Tag</option>
+      <option *ngFor="let tag of tags" value="{{tag.value}}" class="{{tag.value}}">
+        {{tag.color}}
+      </option>
+    </select>
+    <div class="flex justify-between items-end w-full border-b-2 border-slate-500 dark:border-slate-300 pb-2 ml-6">
+      <input type="text" class="
+        outline-0
+        transition-all
+        ease-in-out 
+        bg-transparent 
+        mr-4
+        w-full
+        text-2xl" 
+        placeholder="Meeting with stakeholders..." 
+        required
+        maxlength="30" 
+        #newReminder 
+        id="newReminder" 
+        [(ngModel)]="newReminderInputValue" (keyup.enter)="onEnterReminder($event)" (keydown)="checkReminderLength($event)">
+      <span class="mr-3 opacity-30">{{newInputReminderLen}}/30</span>
+      <span class="transition-all duration-300 cursor-pointer material-symbols-outlined scale-125 hover:scale-95" (click)="addNewReminder(newReminder.value)">done</span>
+    </div>
+  </div>
+  <div *ngFor="let reminder of reminders">
+    <app-reminder [reminders]="reminders" (editRemindersEvent)="updateReminders()" 
+      [tags]="tags"
+      [tag]="reminder.tag" 
+      [time]="reminder.date.time" 
+      [body]="reminder.body" 
+      [id]="reminder.id"
+      class="mb-4 flex justify-between bg-slate-200 dark:bg-slate-800 rounded-3xl p-6">
+    </app-reminder>
+  </div>
+  <div *ngIf="!reminders.length && !addReminderOpen" class="flex items-center justify-center text-center h-full mb-20 text-xl">
+    <h1>Oops! Looks like there is nothing here yet :) <br/> <span (click)="handleAddReminder()" class="cursor-pointer underline underline-offset-4 hover:decoration-wavy text-indigo-400 hover:text-indigo-300">Add your first task!</span></h1>
+  </div>
+</div>
+<div class="fixed inset-x-96 bottom-32 rounded-b-3xl dark:fade-overlay" [style]="{'top':'48rem'}"></div>

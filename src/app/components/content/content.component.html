@@ -1,0 +1,41 @@
+<div class="container mx-auto pb-10">
+  <div class="flex justify-between pt-8 pb-5">
+    <div class="flex items-center">
+      <img src="assets/logo-keeps-e1655215423655-removebg-preview.png" class="w-32"/>
+      <p class="text-indigo-900 dark:text-purple-300" [style]="{'margin-bottom':'8px', 'font-size': '2rem'}">calendar</p>
+    </div>
+    <div class="flex items-center">
+      <h1 class="text-3xl font-bold text-right">{{curDate.monthIndex | month}}</h1>
+      <h1 class="text-3xl mr-5">{{curDate.year}}</h1>
+      <app-button 
+          (click)="prevMonth()"
+          extraClasses="bg-indigo-800 text-white dark:bg-purple-500 hover:bg-indigo-900 scale-75 opacity-70 hover:opacity-100 dark:opacity-100 rounded-xl -ml-3" iconPos="before" icon="chevron_left"></app-button>
+      <app-button 
+        (click)="nextMonth()"
+        extraClasses="bg-indigo-800 text-white dark:bg-purple-500 hover:bg-indigo-900 scale-75 opacity-70 hover:opacity-100 dark:opacity-100 rounded-xl -ml-2" iconPos="after" icon="chevron_right"></app-button>
+    </div>
+  </div>
+  <div class="grid grid-cols-7 pb-6 opacity-30">
+    <p>Sun</p>
+    <p>Mon</p>
+    <p>Tue</p>
+    <p>Wed</p>
+    <p>Thu</p>
+    <p>Fri</p>
+    <p>Sat</p>
+  </div>
+  <div class="grid grid-cols-7">
+    <div *ngFor="let i of [].constructor(dayDiff ?? 0)" class="bg-slate-800 m-1 dark:opacity-40 opacity-10 rounded-xl"></div>
+    <div *ngFor="let day of [].constructor(curMonthLength); let i = index;" class="h-full">
+      <app-day 
+        (click)="toggleModal()"
+        (click)="selectCard(i + 1)"
+        [curDate]="curDate"
+        [index]="i + 1"
+        [reminders]="reminders"
+      >
+      </app-day>
+    </div>
+  </div>
+</div>
+<app-modal [curDate]="curDate" id="reminders-modal" class="absolute inset-0 hidden" (modalEvent)="toggleModal()" (editReminderEvent)="updateReminder()"></app-modal>

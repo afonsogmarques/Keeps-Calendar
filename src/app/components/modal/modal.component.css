@@ -1,0 +1,15 @@
+#tag {
+  transform: scale(0.65);
+}
+
+.fade-overlay {
+  pointer-events: none;
+  position: fixed;
+
+  display: block;
+
+  background-image: linear-gradient(to bottom, 
+      rgba(30, 41, 59, 0), 
+      rgba(30, 41, 59, 1)
+  100%);
+}
