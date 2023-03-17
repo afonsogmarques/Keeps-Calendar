@@ -32,7 +32,7 @@
         <span class="scale-75">{{tag.color}}</span>
       </option>
     </select>
-    <div class="flex justify-between items-end w-full border-b-2 border-slate-500 dark:border-slate-400 pb-2 mx-6">
+    <div class="flex justify-between items-end w-full border-b-2 border-slate-400 pb-2 mx-6">
       <input type="text" class="
         outline-0
         transition-all
@@ -51,9 +51,9 @@
         (keyup.enter)="onEnterEditReminder($event, id)"
         (keydown)="checkReminderLength($event, id)">
       <span class="mr-3 opacity-30">{{editReminderInputLen}}/30</span>
-      <span class="transition-all duration-300 cursor-pointer material-symbols-outlined scale-125 hover:scale-95" (click)="submitEditReminder(editReminder.value, id)">done</span>
     </div>
-    <app-button (click)="handleCancelEditReminder()" displayText="Cancel" extraClasses="bg-slate-600 text-white hover:bg-indigo-500 mt-1"></app-button>
+    <app-button class="flex justify-center" extraClasses="transition-all duration-300 bg-indigo-500 mr-4 text-white hover:bg-indigo-600" iconPos="before" icon="done" (click)="submitEditReminder(editReminder.value, id)"></app-button>
+    <app-button (click)="handleCancelEditReminder()" displayText="Cancel" extraClasses="bg-slate-600 text-white hover:bg-indigo-500"></app-button>
 </ng-container>
 
 

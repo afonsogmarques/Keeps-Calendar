@@ -1,18 +1,20 @@
-<div class="container mx-auto pb-10">
+<div class="container mx-auto flex flex-col justify-center pb-10">
   <div class="flex justify-between pt-8 pb-5">
     <div class="flex items-center">
       <img src="assets/logo-keeps-e1655215423655-removebg-preview.png" class="w-32"/>
       <p class="text-indigo-900 dark:text-purple-300" [style]="{'margin-bottom':'8px', 'font-size': '2rem'}">calendar</p>
     </div>
-    <div class="flex items-center">
-      <h1 class="text-3xl font-bold text-right">{{curDate.monthIndex | month}}</h1>
-      <h1 class="text-3xl mr-5">{{curDate.year}}</h1>
+    <div class="flex items-center mr-32">
       <app-button 
           (click)="prevMonth()"
-          extraClasses="bg-indigo-800 text-white dark:bg-purple-500 hover:bg-indigo-900 scale-75 opacity-70 hover:opacity-100 dark:opacity-100 rounded-xl -ml-3" iconPos="before" icon="chevron_left"></app-button>
+          extraClasses="bg-indigo-800 text-white dark:bg-purple-500 hover:bg-indigo-900 dark:hover:bg-purple-600 scale-75 opacity-70 hover:opacity-100 dark:opacity-100 rounded-xl" iconPos="before" icon="chevron_left"></app-button>
+      <h1 class="text-3xl font-bold text-center" [style]="{'min-width':'246px'}">{{curDate.monthIndex | month}}<span class="text-3xl font-normal">{{curDate.year}}</span></h1>
       <app-button 
         (click)="nextMonth()"
-        extraClasses="bg-indigo-800 text-white dark:bg-purple-500 hover:bg-indigo-900 scale-75 opacity-70 hover:opacity-100 dark:opacity-100 rounded-xl -ml-2" iconPos="after" icon="chevron_right"></app-button>
+        extraClasses="bg-indigo-800 text-white dark:bg-purple-500 hover:bg-indigo-900 dark:hover:bg-purple-600 scale-75 opacity-70 hover:opacity-100 dark:opacity-100 rounded-xl" iconPos="after" icon="chevron_right"></app-button>
+    </div>
+    <div>
+      <app-button extraClasses="bg-indigo-800 hover:bg-indigo-900 hover:opacity-100 text-white opacity-70 dark:bg-purple-500 dark:hover:bg-purple-600 dark:text-yellow-300 dark:opacity-100" icon="{{darkMode ? 'light_mode' : 'dark_mode'}}" iconPos="before" (click)="toggleDarkMode()"></app-button>
     </div>
   </div>
   <div class="grid grid-cols-7 pb-6 opacity-30">

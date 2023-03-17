@@ -15,6 +15,7 @@ export class ModalComponent {
 
   @Input() curDate: any = this.dateService.curDate;
 
+  // couldn't figure out how to use material icons in select options, so this was a goofy workaround
   tags: Tag[] = [
     { color: '🟢', value: 'green'},
     { color: '🔵', value: 'blue'},
@@ -22,6 +23,19 @@ export class ModalComponent {
     { color: '🟠', value: 'orange'},
     { color: '🔴', value: 'red'},
   ]
+
+  randomPlaceholders: string[] = [
+    'Meeting with stakeholders',
+    'Walk Bobby',
+    'Water the plants',
+    'Doctor\'s appointment',
+    'Monthly grocery shopping',
+    'Pick-up the kids from school',
+    'Car inspection',
+    'Project deadline'
+  ];
+
+  randomPlaceholder: string = this.randomPlaceholders[Math.floor(Math.random() * this.randomPlaceholders.length)];
 
   addReminderOpen: boolean = false;
   prevReminderInputValue: string = '';
@@ -37,6 +51,19 @@ export class ModalComponent {
     private reminderService:ReminderService,
     public dateService:DateService
   ) {
+  }
+
+  ngOnInit(): void {
+    document.addEventListener('keydown', (e) => {
+      // if key pressed was not Escape, return early
+      if (!(e.key === 'Escape')) return;
+
+      // else, get element from DOM
+      const element = document.getElementsByTagName('app-modal')[0];
+
+      // if element doesn't contain class 'hidden' (which means it's open), add it in order to conceal it once again
+      !element.classList.contains('hidden') && element.classList.add('hidden');
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -58,30 +85,50 @@ export class ModalComponent {
 
   // toggle form
   handleAddReminder(): void {
+    // regenerate placeholder
+    this.randomPlaceholder = this.randomPlaceholders[Math.floor(Math.random() * this.randomPlaceholders.length)];
+    
+    // if closing dial
+    if (this.addReminderOpen) {
+      // clear inputs
+      this.newReminderInputValue = '';
+      this.newReminderTagValue = '';
+      this.newReminderTimeValue = '';
+      // reset input character length
+      this.newInputReminderLen = 0;
+    }
+
+    // set tag value to initial value because for some reason html "value" attribute wasn't working
+    this.newReminderTagValue = '';
+
+    // toggle input visibility
     this.addReminderOpen = !this.addReminderOpen;
+
     // update reminder locally
     this.reminders = this.reminderService.getDayReminders(this.curDate.day, this.curDate.monthIndex, this.curDate.year);
   };
 
-  // close modal on 'Esc' key
-  closeModal(event: any): void {
-    console.log('teste');
-  }
-
   addNewReminder(value: string): void {
     // if nothing is written
     if (!value) {
-      // display red border on input
-      document.getElementById('newReminder')!.parentElement!.classList.add('border-b-red-400');
+      // get reminder input's parent element
+      const element = document.getElementById('newReminder')!.parentElement;
+      // display red border as warning
+      this.displayRedBorder(element);
+      // and return early
       return;
     }
-    // return if tag value hasn't been selected
+
+    // if time value hasn't been selected
     if (!this.newReminderTimeValue) {
-      console.log(document.getElementById('timePicker'));
-      document.getElementById('timePicker')!.classList.remove('border-slate-500');
-      document.getElementById('timePicker')!.classList.add('border-red-400');
+      // get time input
+      const element = document.getElementById('timePicker')
+      // display red border as warning
+      this.displayRedBorder(element);
+      // and return early
       return;
     }
+
     // return if reminder is 31 chars or longer
     if (value.length > 30) return;
 
@@ -109,6 +156,7 @@ export class ModalComponent {
     // emit edit reminders event for parent components
     this.updateReminders();
 
+    // reset input length count to 0
     this.newInputReminderLen = 0;
   }
 
@@ -159,4 +207,10 @@ export class ModalComponent {
     this.editReminderEvent.emit();
   }
 
+  displayRedBorder(element: HTMLElement | null) {
+    // remove previous border class
+    element?.classList.remove('border-slate-400');
+    // display red border under input
+    element?.classList.add('border-red-400');
+  }
 }

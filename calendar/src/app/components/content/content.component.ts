@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { DateService } from 'src/app/services/dateService/date.service';
 import { Reminder } from 'src/app/interfaces/reminder';
 import { ReminderService } from 'src/app/services/reminderService/reminder.service';
+import { DarkModeService } from 'src/app/services/dark-mode.service';
 
 @Component({
   selector: 'app-content',
@@ -19,10 +20,19 @@ export class ContentComponent {
   reminders: Reminder[] = this.reminderService.getAllReminders();
   modalOpen: boolean = false;
 
+  @Output() darkModeEvent = new EventEmitter<boolean>();
+  darkMode: boolean = this.darkModeService.getCurMode();
+
   constructor(
     private dateService:DateService,
     private reminderService:ReminderService,
+    private darkModeService:DarkModeService
   ) {}
+
+  toggleDarkMode(): void {
+    this.darkMode = !this.darkMode;
+    this.darkModeEvent.emit(this.darkMode);
+  }
 
   toggleModal(): void {
     // store modal element in variable from its id

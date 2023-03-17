@@ -1,27 +1,61 @@
-# Calendar
+## Instructions
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.0.
+The goal of this exercise is to create a demo calendar application using Angular.
 
-## Development server
+Please don't use a `calendar` library, we would like to see your own calendar logic.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+### The Task
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+You should start by rendering a single month view of a calendar for the current month – along with the lines of the `calendar` image in this project.
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Features & Requirements:
 
-## Running unit tests
+* Ability to add a new “reminder” (max 30 chars) for a user entered day and time.
+* Display reminders on the calendar view in the correct time order.
+* Allow the user to select a color when creating a reminder and display it appropriately.
+* Properly handle overflow when multiple reminders appear on the same date.
+* Ability to edit reminders – including changing text, day and time & color.
+* Ability to delete reminders.
+* Expand the calendar to support more than the current month.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Notes:
 
-## Running end-to-end tests
+* The data should be retained across different page views, but it’s not necessary to persist it beyond a browser refresh.
+* Here at Keeps we make products for humans, this means that we will evaluate the UX of the exercise.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Evaluation
 
-## Further help
+| Functionality     |                                                              | Possible Points |
+|-------------------|--------------------------------------------------------------|-----------------|
+|                   | Matches the proposed requirements                            | 25              |
+|                   | Console do not display any error/warning                     | 10              |
+|                   | User Experience                                              | 15              |
+| **Code Quality**  |                                                              | --              |
+|                   | Code format, readability, maintainability, etc.              | 10              |
+|                   | Folders and packages structure                               | 10              |
+|                   | Separation of components and logic by clear responsibilities | 20              |
+| **Testing**       |                                                              | --              |
+|                   | Has tests                                                    | 5               |
+| **Documentation** |                                                              | --              |
+|                   | Has a README.md with instructions                            | 5               |
+| **Total**         |                                                              | 100             |
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Bonus Points:
+1. If you deploy the application in any server and share the link with us
+2. If provide thoughts on what you could improve on your code given more time and incentives
+
+## F.A.Q.
+
+### Is it necessary to connect to a backend?
+No, this is a simply frontend exercise.
+
+### How do you evaluate the exercise?
+For every exercise we have one senior frontend engineers from our team reviewing the code and the functionality and giving a score for each line item as shown in the previous table.
+
+### How can I deliver the exercise?
+To deliver the exercise, you should clone this repository and work on a new branch. When you'll consider it completed, just push the branch and open a Merge Request.
+
+### Will I have access to the evaluation?
+By default we only send the result, however you can feel free to request the full evaluation and we will share it with you as well as the final score.

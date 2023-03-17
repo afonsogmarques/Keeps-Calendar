@@ -35,7 +35,6 @@ export class DateService {
     year: number,
     month: number
   ): number {
-    console.log(new Date(year, month + 1, 0).getDate());
     return new Date(year, month + 1, 0).getDate();
   }
 
