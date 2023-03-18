@@ -2,8 +2,7 @@
   flex
   lg:flex-col
   justify-center lg:justify-start
-  m-1
-  h-16 sm:h-24 md:h-28 lg:h-32 2xl:h-40
+  h-full
   rounded-xl 
   border-slate-700 
   p-3 lg:py-3 lg:px-4 text-white 2xl:p-6
@@ -19,7 +18,10 @@
   hover:text-white
   hover:border-none">
   <div class="flex justify-center lg:justify-between items-center">
-    <p class="text-lg lg:font-bold lg:text-xl">{{index}}</p>
+    <div class="flex flex-col items-center">
+      <p class="text-lg lg:font-bold lg:text-xl">{{index}}</p>
+      <span *ngIf="todaysReminders?.length" class="material-symbols-outlined text-xs scale-75 lg:hidden" id="tag">circle</span>
+    </div>
     <div *ngIf="todaysReminders?.length" class="flex items-center hidden lg:flex">
       <span class="material-symbols-outlined scale-75">notifications</span>
       <p class="text-sm">{{todaysReminders?.length}}</p>

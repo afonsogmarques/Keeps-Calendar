@@ -10,7 +10,6 @@ import { ButtonComponent } from './components/button/button.component';
 import { MonthPipe } from './pipes/month.pipe';
 import { DateStringPipe } from './pipes/date-string.pipe';
 import { ReminderComponent } from './components/reminder/reminder.component';
-import { AlertComponent } from './components/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +21,6 @@ import { AlertComponent } from './components/alert/alert.component';
     MonthPipe,
     DateStringPipe,
     ReminderComponent,
-    AlertComponent,
   ],
   imports: [BrowserModule, FormsModule],
   providers: [],
