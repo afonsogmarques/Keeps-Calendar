@@ -3,6 +3,7 @@ import { ReminderService } from 'src/app/services/reminderService/reminder.servi
 import { DateService } from 'src/app/services/dateService/date.service';
 import { Reminder } from 'src/app/interfaces/reminder';
 import { Tag } from 'src/app/interfaces/tag';
+import { DarkModeService } from 'src/app/services/dark-mode.service';
 
 @Component({
   selector: 'app-modal',
@@ -35,6 +36,8 @@ export class ModalComponent {
     'Project deadline'
   ];
 
+  darkMode: boolean = this.darkModeService.getCurMode();
+
   randomPlaceholder: string = this.randomPlaceholders[Math.floor(Math.random() * this.randomPlaceholders.length)];
 
   addReminderOpen: boolean = false;
@@ -49,7 +52,8 @@ export class ModalComponent {
 
   constructor(
     private reminderService:ReminderService,
-    public dateService:DateService
+    public dateService:DateService,
+    public darkModeService:DarkModeService
   ) {
   }
 
@@ -209,7 +213,7 @@ export class ModalComponent {
 
   displayRedBorder(element: HTMLElement | null) {
     // remove previous border class
-    element?.classList.remove('border-slate-400');
+    element?.classList.remove(this.darkMode ? 'dark:border-slate-400' : 'border-slate-400');
     // display red border under input
     element?.classList.add('border-red-400');
   }

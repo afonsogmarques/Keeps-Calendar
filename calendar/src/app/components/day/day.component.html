@@ -1,10 +1,13 @@
 <div class="{{isToday ? 'bg-indigo-900 dark:bg-purple-600' : 'bg-indigo-800 opacity-80 dark:bg-slate-700 dark:opacity-100'}} 
-  m-1 
-  h-40 
+  flex
+  lg:flex-col
+  justify-center lg:justify-start
+  m-1
+  h-16 sm:h-24 md:h-28 lg:h-32 2xl:h-40
   rounded-xl 
   border-slate-700 
-  p-4 text-white 
-  text-2xl 
+  p-3 lg:py-3 lg:px-4 text-white 2xl:p-6
+  text-2xl
   {{isToday && 'text-indigo-600'}} cursor-pointer 
   ease-in-out
   duration-300
@@ -15,20 +18,20 @@
   dark:hover:text-indigo-600
   hover:text-white
   hover:border-none">
-  <div class="flex justify-between items-center">
-    <p class="font-bold">{{index}}</p>
-    <div *ngIf="todaysReminders?.length" class="flex items-center">
+  <div class="flex justify-center lg:justify-between items-center">
+    <p class="text-lg lg:font-bold lg:text-xl">{{index}}</p>
+    <div *ngIf="todaysReminders?.length" class="flex items-center hidden lg:flex">
       <span class="material-symbols-outlined scale-75">notifications</span>
       <p class="text-sm">{{todaysReminders?.length}}</p>
     </div>
   </div>
-  <div *ngFor="let reminder of todaysReminders; let i = index;">
-    <div *ngIf="i < 2" class="flex text-xs {{i === 0 && 'pt-2'}} pb-1">
+  <div *ngFor="let reminder of todaysReminders; let i = index;" class="hidden lg:flex lg:flex-col">
+    <div *ngIf="i < 2" class="flex text-xs {{i === 0 && 'pt-1 2xl:pt-2'}} pb-1">
       <span *ngIf="reminder.tag" class="mr-1 material-symbols-outlined text-xs scale-75 {{reminder.tag}}" id="tag">circle</span>
-      <p>
+      <p class="truncate">
         {{reminder.body}}
       </p>
     </div>
   </div>
-  <p *ngIf="todaysReminders!.length > 2" class="text-xs">{{todaysReminders && todaysReminders.length - 2}} more...</p>
+  <p *ngIf="todaysReminders!.length > 2" class="text-xs hidden lg:flex flex-col">{{todaysReminders && todaysReminders.length - 2}} more...</p>
 </div>

@@ -4,56 +4,66 @@
       <span *ngIf="tag" class="mr-1 material-symbols-outlined text-md {{tag}} downsize -ml-1" id="tag">circle</span>
       <p>{{time}}</p>
     </div>
-    <p class="text-xl">{{body}}</p>
+    <p class="text-xl" [style]="{'word-break':'break-word'}">{{body}}</p>
   </div>
-  <div>
-    <span class="transition-all material-symbols-outlined cursor-pointer mt-3 scale-75 hover:scale-50 mr-3" (click)="handleEditReminder(id)">edit</span>
-    <span class="transition-all material-symbols-outlined cursor-pointer mt-3 text-red-400 hover:scale-75" (click)="handleDeleteReminder(id)">close</span>
+  <div class="flex flex-col justify-around">
+    <span class="transition-all material-symbols-outlined cursor-pointer scale-75 hover:scale-50" (click)="handleEditReminder(id)">edit</span>
+    <span class="transition-all material-symbols-outlined cursor-pointer text-red-400 hover:scale-75" (click)="handleDeleteReminder(id)">close</span>
   </div>
 </ng-container>
 <ng-container *ngIf="editing">
-  <input type="datetime-local" required name="timePicker" id="{{id}}" [(ngModel)]="editReminderDateTimeValue" class="
-    cursor-pointer
-    dark:bg-slate-700 
-    dark:border-slate-500 
-    px-4 py-2 
-    w-96 
-    rounded-2xl 
-    timePicker">
-    <select [(ngModel)]="editReminderTagValue" id="{{id}}" class="
-      cursor-pointer 
-      dark:bg-slate-700 
-      dark:border-slate-500 
-      rounded-2xl 
-      px-4 py-2 ml-4" 
-      [style]="{'max-width':'70px'}">
-      <option disabled selected="Tag">Tag</option>
-      <option *ngFor="let tag of tags" value="{{tag.value}}" class="{{tag.value}}">
-        <span class="scale-75">{{tag.color}}</span>
-      </option>
-    </select>
-    <div class="flex justify-between items-end w-full border-b-2 border-slate-400 pb-2 mx-6">
-      <input type="text" class="
-        outline-0
-        transition-all
-        ease-in-out 
-        bg-transparent 
-        mr-4
-        w-full
-        text-lg"
-        id="{{id}}"
-        maxlength="30"
-        value={{body}}
-        placeholder={{body}}
-        #editReminder
-        required
-        [(ngModel)]="editReminderInputValue" 
-        (keyup.enter)="onEnterEditReminder($event, id)"
-        (keydown)="checkReminderLength($event, id)">
-      <span class="mr-3 opacity-30">{{editReminderInputLen}}/30</span>
+  <div class="flex flex-col flex-wrap w-full 2xl:flex-row 2xl:flex-nowrap gap-4">
+    <div class="flex flex-col md:flex-row gap-5 2xl:basis-2/4">
+      <input type="datetime-local" required name="timePicker" id="{{id}}" [(ngModel)]="editReminderDateTimeValue" class="
+        cursor-pointer
+        dark:bg-slate-700 
+        dark:border-slate-500
+        basis-3/4
+        px-4 py-2
+        rounded-2xl 
+        timePicker">
+      <select [(ngModel)]="editReminderTagValue" id="{{id}}" class="
+        cursor-pointer 
+        dark:bg-slate-700 
+        dark:border-slate-500 
+        rounded-2xl
+        basis-1/4
+        px-4 py-2"
+        [style]="{'height':'42px'}">
+        <option disabled selected="Tag">Tag</option>
+        <option *ngFor="let tag of tags" value="{{tag.value}}" class="{{tag.value}}">
+          <span class="scale-75">{{tag.color}}</span>
+        </option>
+      </select>
     </div>
-    <app-button class="flex justify-center" extraClasses="transition-all duration-300 bg-indigo-500 mr-4 text-white hover:bg-indigo-600" iconPos="before" icon="done" (click)="submitEditReminder(editReminder.value, id)"></app-button>
-    <app-button (click)="handleCancelEditReminder()" displayText="Cancel" extraClasses="bg-slate-600 text-white hover:bg-indigo-500"></app-button>
+    <div class="flex flex-col lg:flex-row gap-6 2xl:basis-2/4">
+      <div class="flex justify-between items-end w-full border-b-2 border-slate-400 pb-1">
+        <input type="text" class="
+          outline-0
+          transition-all
+          ease-in-out 
+          bg-transparent 
+          mr-4
+          w-full
+          text-lg
+          2xl:text-xl"
+          id="{{id}}"
+          maxlength="30"
+          value={{body}}
+          placeholder={{body}}
+          #editReminder
+          required
+          [(ngModel)]="editReminderInputValue" 
+          (keyup.enter)="onEnterEditReminder($event, id)"
+          (keydown)="checkReminderLength($event, id)">
+        <span class="opacity-30 text-sm lg:text-base 2xl:text-lg">{{editReminderInputLen}}/30</span>
+      </div>
+      <div class="flex justify-between gap-3">
+        <app-button class="basis-4/6 flex justify-center" extraClasses="w-full transition-all duration-300 bg-indigo-500 text-white hover:bg-indigo-600" iconPos="before" icon="done" (click)="submitEditReminder(editReminder.value, id)"></app-button>
+        <app-button class="basis-1/6" (click)="handleCancelEditReminder()" displayText="Cancel" extraClasses="w-full bg-slate-600 text-white hover:bg-indigo-500"></app-button>
+      </div>
+    </div>
+  </div>
 </ng-container>
 
 

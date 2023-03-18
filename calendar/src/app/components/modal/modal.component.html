@@ -3,65 +3,76 @@
   flex 
   flex-col 
   fixed 
-  inset-x-96 inset-y-32 
-  px-28 py-20 
+  inset-x-6 inset-y-32 lg:inset-32 xl:inset-x-40 2xl:inset-x-80
+  px-12 py-14 lg:px-20
   bg-white dark:bg-slate-700 
   rounded-3xl 
   overflow-x-hidden overflow-y-scroll">
-  <div class="flex justify-between">
-    <div class="mb-10 text-xl">
+  <div class="flex justify-between mb-9">
+    <div class="text-xl">
       <h1 class="text-4xl font-bold">Reminders</h1>
       <p class="opacity-60">{{ curDate.day | dateString: curDate.monthIndex : curDate.year }}</p>
     </div>
-    <app-button (click)="handleAddReminder()" displayText="{{addReminderOpen ? 'Cancel' : '+ Add Reminder'}}" extraClasses="{{addReminderOpen ? 'bg-slate-500 dark:bg-slate-600' : 'bg-indigo-500'}} text-white hover:bg-indigo-600"></app-button>
+    <app-button (click)="handleAddReminder()" extraClasses="{{addReminderOpen ? 'bg-slate-500 dark:bg-slate-600' : 'bg-indigo-500'}} text-white hover:bg-indigo-600 h-12 w-full rounded-3xl" icon="{{addReminderOpen ? 'close' : 'add'}}" iconPos="before"></app-button>
   </div>
   <div *ngIf="addReminderOpen" class="
-    flex 
+    flex
+    flex-wrap
+    2xl:flex-nowrap
+    lg:gap-6
     justify-between
     align-center
-    mb-20 
-    mt-10
-    pb-3">
-    <input type="time" name="timePicker" id="timePicker" [(ngModel)]="newReminderTimeValue" class="
-      cursor-pointer 
-      border-2
-      bg-slate-200
-      dark:bg-slate-700 
-      dark:border-2
-      border-slate-400 
-      p-3 w-40 
-      rounded-2xl">
-    <select [(ngModel)]="newReminderTagValue" class="
-      cursor-pointer 
-      bg-slate-200
-      dark:bg-slate-700 
-      dark:border-2
-      dark:border-slate-400 
-      rounded-2xl 
-      p-3 ml-4">
-      <option value="" disabled selected>Tag</option>
-      <option *ngFor="let tag of tags" value="{{tag.value}}" class="{{tag.value}}">
-        {{tag.color}}
-      </option>
-    </select>
-    <div class="flex justify-between items-end w-full border-b-2 border-slate-400 pb-2 ml-6">
-      <input type="text" class="
-        outline-0
-        transition-all
-        ease-in-out 
-        bg-transparent 
-        mr-4
-        w-full
-        text-2xl" 
-        placeholder="{{randomPlaceholder}}" 
-        required
-        maxlength="30" 
-        #newReminder 
-        id="newReminder" 
-        [(ngModel)]="newReminderInputValue" (keyup.enter)="onEnterReminder($event)" (keydown)="checkReminderLength($event)">
-      <span class="mr-3 opacity-30">{{newInputReminderLen}}/30</span>
+    mb-9
+    pb-3
+    gap-4">
+    <div class="flex flex-col md:flex-row justify-between w-full gap-4 lg:gap-6">
+      <input type="time" name="timePicker" id="timePicker" [(ngModel)]="newReminderTimeValue" class="
+        basis-3/4
+        cursor-pointer 
+        border-2 
+        bg-slate-200
+        dark:bg-slate-700
+        dark:border-slate-400
+        p-3 
+        rounded-2xl">
+      <select [(ngModel)]="newReminderTagValue" class="
+        basis-1/4
+        cursor-pointer 
+        bg-slate-200
+        dark:bg-slate-700 
+        dark:border-2
+        {{darkMode ? 'dark:border-slate-400' : 'border-slate-400'}}
+        rounded-2xl 
+        p-3">
+        <option value="" disabled selected>Tag</option>
+        <option *ngFor="let tag of tags" value="{{tag.value}}" class="{{tag.value}}">
+          {{tag.color}}
+        </option>
+      </select>
     </div>
-    <app-button class="flex" extraClasses="transition-all duration-300 bg-indigo-500 ml-6 text-white hover:bg-indigo-600 items-center" iconPos="before" icon="done" (click)="addNewReminder(newReminder.value)"></app-button>
+    <div class="flex flex-col md:flex-row w-full gap-4 lg:gap-6">
+      <div class="flex justify-between items-end w-full border-b-2 lg:pb-1 lg:basis-11/12 {{darkMode ? 'dark:border-slate-400' : 'border-slate-400'}}">
+        <input type="text" class="
+          outline-0
+          transition-all
+          ease-in-out 
+          bg-transparent 
+          mr-4
+          w-full
+          text-lg
+          lg:text-xl
+          xl:text-2xl
+          2xl:text-3xl" 
+          placeholder="{{randomPlaceholder}}" 
+          required
+          maxlength="30" 
+          #newReminder 
+          id="newReminder" 
+          [(ngModel)]="newReminderInputValue" (keyup.enter)="onEnterReminder($event)" (keydown)="checkReminderLength($event)">
+        <span class="mr-3 opacity-30 xl:text-lg">{{newInputReminderLen}}/30</span>
+      </div>
+      <app-button class="flex w-full lg:basis-1/12" extraClasses="transition-all duration-300 bg-indigo-500 text-white hover:bg-indigo-600 items-center w-full" iconPos="before" icon="done" (click)="addNewReminder(newReminder.value)"></app-button>
+    </div>
   </div>
   <div *ngFor="let reminder of reminders">
     <app-reminder [reminders]="reminders" (editRemindersEvent)="updateReminders()" 
@@ -73,7 +84,7 @@
       class="mb-4 flex justify-between bg-slate-200 dark:bg-slate-800 rounded-3xl p-6">
     </app-reminder>
   </div>
-  <div *ngIf="!reminders.length && !addReminderOpen" class="flex items-center justify-center text-center h-full mb-20 text-xl">
+  <div *ngIf="!reminders.length && !addReminderOpen" class="flex items-center justify-center text-center h-full mb-20 text-lg">
     <h1>Oops! Looks like there is nothing here yet :) <br/> <span (click)="handleAddReminder()" class="cursor-pointer underline underline-offset-4 hover:decoration-wavy text-indigo-400 hover:text-indigo-300">Add your first task!</span></h1>
   </div>
 </div>
