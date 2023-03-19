@@ -85,6 +85,8 @@ export class ModalComponent {
     this.modalEvent.emit();
     // toggle addReminderOpen
     this.addReminderOpen = false;
+    // clear inputs
+    this.clearNewReminderInputs();
   };
 
   // toggle form
@@ -92,15 +94,8 @@ export class ModalComponent {
     // regenerate placeholder
     this.randomPlaceholder = this.randomPlaceholders[Math.floor(Math.random() * this.randomPlaceholders.length)];
     
-    // if closing dial
-    if (this.addReminderOpen) {
-      // clear inputs
-      this.newReminderInputValue = '';
-      this.newReminderTagValue = '';
-      this.newReminderTimeValue = '';
-      // reset input character length
-      this.newInputReminderLen = 0;
-    }
+    // if closing dial, clear inputs
+    this.addReminderOpen && this.clearNewReminderInputs();
 
     // set tag value to initial value because for some reason html "value" attribute wasn't working
     this.newReminderTagValue = '';
@@ -111,6 +106,15 @@ export class ModalComponent {
     // update reminder locally
     this.reminders = this.reminderService.getDayReminders(this.curDate.day, this.curDate.monthIndex, this.curDate.year);
   };
+
+  clearNewReminderInputs(): void {
+    // clear inputs
+    this.newReminderInputValue = '';
+    this.newReminderTagValue = '';
+    this.newReminderTimeValue = '';
+    // reset input character length
+    this.newInputReminderLen = 0;
+  }
 
   addNewReminder(value: string): void {
     // get time input
