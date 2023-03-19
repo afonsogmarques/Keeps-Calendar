@@ -113,22 +113,23 @@ export class ModalComponent {
   };
 
   addNewReminder(value: string): void {
+    // get time input
+    const timePickerInput = document.getElementById('timePicker');
+    // get reminder input's parent element
+    const textInputParent = document.getElementById('newReminder')!.parentElement;
+
     // if nothing is written
     if (!value) {
-      // get reminder input's parent element
-      const element = document.getElementById('newReminder')!.parentElement;
       // display red border as warning
-      this.displayRedBorder(element);
+      this.displayRedBorder(textInputParent);
       // and return early
       return;
     }
 
     // if time value hasn't been selected
     if (!this.newReminderTimeValue) {
-      // get time input
-      const element = document.getElementById('timePicker')
       // display red border as warning
-      this.displayRedBorder(element);
+      this.displayRedBorder(timePickerInput);
       // and return early
       return;
     }
@@ -154,14 +155,18 @@ export class ModalComponent {
     this.newReminderTagValue = '';
     this.newReminderTimeValue = '';
 
+    // reset input length count to 0
+    this.newInputReminderLen = 0;
+
+    // reset border colors
+    this.resetBorder(timePickerInput!, textInputParent!);
+
     // update reminders locally
     this.reminders = this.reminderService.getDayReminders(this.curDate.day, this.curDate.monthIndex, this.curDate.year);
 
     // emit edit reminders event for parent components
     this.updateReminders();
 
-    // reset input length count to 0
-    this.newInputReminderLen = 0;
   }
 
   // if enter is pressed, delegate task to addNewReminder()
@@ -211,10 +216,21 @@ export class ModalComponent {
     this.editReminderEvent.emit();
   }
 
-  displayRedBorder(element: HTMLElement | null) {
+  displayRedBorder(element: HTMLElement | null): void {
     // remove previous border class
     element?.classList.remove(this.darkMode ? 'dark:border-slate-400' : 'border-slate-400');
     // display red border under input
     element?.classList.add('border-red-400');
   }
+
+  // accept any number of elements
+  resetBorder(...elements: HTMLElement[]): void {
+    // for each element passed into the function
+    elements.forEach(element => {
+      // remove red border
+      element?.classList.remove('border-red-400');
+      // display previous border
+      element?.classList.add(this.darkMode ? 'dark:border-slate-400' : 'border-slate-400');
+    });
+  };
 }
